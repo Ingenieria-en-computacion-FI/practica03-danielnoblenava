@@ -6,6 +6,14 @@
 /* Tipo opaco */
 typedef struct Pelicula Pelicula;
 
+struct Pelicula{
+	char *nombre;
+	char *genero;
+	short year;
+	short numDirectores;
+	char *directores[10];
+};
+
 /* Crear una película */
 Pelicula* crearPelicula(const char* titulo, int anio, const char* genero);
 
