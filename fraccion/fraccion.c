@@ -47,10 +47,16 @@ Fraccion* crearFraccion(int num, int den)
        5 Regresar la fracción
     */
 	if(den == 0){
-		printf("\nDenominador es cero :(");
-		return NULL;
+		fprintf(stderr, "\nDenominador es cero :(\n");
+		exit(EXIT_FAILURE);
 	}
+
 	Fraccion* nueva = malloc(sizeof(Fraccion));
+
+	if(nueva == NULL){
+		fprintf(stderr, "\nError: fallo en la asignacion de memoria en crearFraccion\n");
+		exit(EXIT_FAILURE);		
+	}
 
 	int divisor = mcd(num, den);
 	num /= divisor;

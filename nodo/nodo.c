@@ -24,8 +24,8 @@ Nodo* crearNodo(int valor)
     */
 	Nodo* nuevo = malloc(sizeof(Nodo));
 	if(nuevo == NULL){
-		printf("\nFallo en la asignacion de memoria de nodo");
-		exit(-1);
+		fprintf(stderr, "\nError: fallo en la asignacion de memoria en nodo\n");
+		exit(EXIT_FAILURE);
 	} 
 	nuevo->valor = valor;
 	return nuevo;
@@ -40,8 +40,9 @@ int obtenerValor(Nodo* nodo)
        2 Regresar el valor almacenado
     */
 	if(nodo == NULL){
-		printf("\nSe recibio un nodo null");
-		exit(-1);
+		printf("\nError: Se recibio un nodo null en obtenerValor\n");
+		return -1;
+		
 	}
 	return nodo->valor;
 }
@@ -55,7 +56,7 @@ void asignarValor(Nodo* nodo, int valor)
        2 Asignar el nuevo valor
     */
 	if(nodo == NULL){
-		printf("\nSe recibio un nodo null");
+		printf("\nSe recibio un nodo null\n");
 		return;
 	}
 	nodo->valor = valor;
@@ -70,3 +71,4 @@ void destruirNodo(Nodo* nodo)
     */
 	free(nodo);
 }
+
