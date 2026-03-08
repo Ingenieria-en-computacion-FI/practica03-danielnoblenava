@@ -3,23 +3,6 @@
 #include <string.h>
 #include "pelicula.h"
 
-
-/* TODO
-   Definir la estructura Pelicula
-
-   Debe contener:
-   - titulo (cadena dinámica)
-   - anio
-   - genero (cadena dinámica)
-   - arreglo de directores
-   - contador de directores
-*/
-struct Pelicula
-{
-    /* TODO */
-};
-
-
 /* TODO
    Crear función auxiliar para copiar cadenas
    usando malloc + strcpy
@@ -27,13 +10,15 @@ struct Pelicula
 char* copiarCadena(const char* texto)
 {
     /* TODO */
-
-    return NULL;
+	if(!texto) return NULL;
+	char* copia = malloc(strlen(texto)+1);
+	if(copia) strcpy(copia, texto);
+	return copia;
 }
 
 
 /* Crear película */
-Pelicula* crearPelicula(const char* titulo, int anio, const char* genero)
+Pelicula* crearPelicula(const char* titulo, short anio, const char* genero)
 {
     /* TODO
        1 Reservar memoria para Pelicula
@@ -43,8 +28,12 @@ Pelicula* crearPelicula(const char* titulo, int anio, const char* genero)
        5 Inicializar contador de directores en 0
        6 Regresar la película
     */
-
-    return NULL;
+	Pelicula *nueva = (Pelicula*)malloc(sizeof(Pelicula));
+	nueva->nombre = copiarCadena(titulo);
+	nueva->genero = copiarCadena(genero);
+	nueva->year = anio;
+	nueva->numDirectores = 0;
+	return nueva;
 }
 
 
@@ -59,6 +48,16 @@ void imprimir(Pelicula* p)
        Genero
        Lista de directores
     */
+	printf("\nTitulo de la pelicula %s", p->nombre);
+	printf("\nA�o de la pelicula %s", p->year);
+	printf("\nGenero de la pelicula %s", p->genero);
+	if(p->numDirectores > 0){
+		for(int i = 0; i < p->numDirectores; i++){
+			printf("\nDirector %d = %s", i, p->directores[i]);
+		}
+	} else {
+		printf("\nAun no hay directores :(");	
+	}
 }
 
 
@@ -69,6 +68,9 @@ void cambiarGenero(Pelicula* p, const char* nuevoGenero)
        1 Liberar el genero anterior
        2 Copiar nuevoGenero
     */
+	free(p->genero);
+	p->genero = NULL;
+	p->genero = copiarCadena(nuevoGenero);
 }
 
 
@@ -81,6 +83,13 @@ void agregarDirector(Pelicula* p, const char* director)
        3 Guardarlo en el arreglo
        4 Incrementar contador
     */
+	if(strlen(director) > MAX_DIRECTORES){
+		printf("\nMuchos caracteres nigga :(");
+		return;
+	}
+	int index = p->numDirectores;
+	p->directores[index] = copiarCadena(director);
+	p->numDirectores++;
 }
 
 
@@ -93,4 +102,10 @@ void destruir(Pelicula* p)
        3 Liberar cada director
        4 Liberar la estructura
     */
+	free(p->nombre);
+	free(p->genero);
+	for(int i = 0; i <= p->numDirectores; i++){
+		free(p->directores[i]);
+	}
+	free(p);
 }

@@ -15,7 +15,7 @@ struct Pelicula{
 };
 
 /* Crear una película */
-Pelicula* crearPelicula(const char* titulo, int anio, const char* genero);
+Pelicula* crearPelicula(const char* titulo, short anio, const char* genero);
 
 /* Imprimir información de la película */
 void imprimir(Pelicula* p);
