@@ -11,6 +11,8 @@
 struct Fraccion
 {
     /* TODO */
+	int numerador;
+	int denominador;
 };
 
 
@@ -22,7 +24,15 @@ int mcd(int a, int b)
 {
     /* TODO */
 
-    return 1;
+	if(a == 0)
+		return a;
+	if(b == 0)
+		return b;
+	if (a == b)
+		return a;
+	if (a > b)
+		return mcd(a-b, b);
+	return mcd(a, b-a);
 }
 
 
@@ -36,8 +46,19 @@ Fraccion* crearFraccion(int num, int den)
        4 Simplificar la fracción
        5 Regresar la fracción
     */
+	if(den == 0){
+		printf("\nDenominador es cero :(");
+		return NULL;
+	}
+	Fraccion* nueva = malloc(sizeof(Fraccion));
 
-    return NULL;
+	int divisor = mcd(num, den);
+	num /= divisor;
+	den /= divisor;
+
+	nueva->numerador = num;
+	nueva->denominador = den;
+	return nueva;
 }
 
 
@@ -48,6 +69,9 @@ void simplificar(Fraccion* f)
        1 Calcular el MCD
        2 Dividir numerador y denominador entre el MCD
     */
+	int divisor = mcd(f->numerador, f->denominador);
+	f->numerador /= divisor;
+	f->denominador /= divisor;
 }
 
 
@@ -65,7 +89,12 @@ Fraccion* sumar(Fraccion* a, Fraccion* b)
        4 Regresar resultado
     */
 
-    return NULL;
+	int num = (a->numerador*b->denominador)+(a->denominador*b->numerador);
+	int den = a->denominador*b->denominador;
+	
+	Fraccion *result = crearFraccion(num, den);
+	simplificar(result);
+	return result;
 }
 
 
@@ -77,6 +106,7 @@ void imprimir(Fraccion* f)
 
        numerador/denominador
     */
+	printf("\n%d/%d", f->numerador, f->denominador);
 }
 
 
@@ -86,4 +116,5 @@ void destruir(Fraccion* f)
     /* TODO
        Liberar memoria con free
     */
+	free(f);
 }
